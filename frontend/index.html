@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="StudySpot helps people discover and rate cafés that are good for studying." />
+    <title>StudySpot — Find your focus</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="StudySpot home"><span class="brand-dot" aria-hidden="true">✦</span><span><strong>StudySpot</strong><small>find your focus</small></span></a>
+      <nav aria-label="Primary navigation"><a href="#discover">Explore spots</a></nav>
+      <button id="add-spot-button" class="button button-dark" type="button"><span aria-hidden="true">＋</span> Add a spot</button>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <img class="hero-image" src="StudySpot.png" alt="A collage of welcoming café storefronts" />
+        <div class="hero-wash" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow hero-eyebrow">your study session starts here</p>
+          <h1 id="hero-title">Find your<br /><em>focus.</em></h1>
+          <p class="hero-copy">A community map for cafés with the quiet corners, good coffee, and WiFi that make deep work feel easy.</p>
+          <button id="explore-button" class="button button-light" type="button">Explore study spots <span aria-hidden="true">↓</span></button>
+        </div>
+        <div class="hero-note" aria-hidden="true"><span>✦</span> Your next good session is nearby</div>
+      </section>
+
+      <section id="discover" class="discover-section" aria-labelledby="discover-title">
+        <div class="section-intro"><div><p class="eyebrow">study cafés, mapped by people like you</p><h2 id="discover-title">Pick a place,<br />settle in.</h2></div><div class="discovery-status"><span id="api-status" class="status-pill" data-state="loading">Connecting…</span><span id="pin-count" class="spot-count">0 spots</span></div></div>
+        <div class="discovery-layout">
+          <aside class="places-panel" aria-live="polite">
+            <div id="empty-state" class="empty-state"><div class="empty-art" aria-hidden="true"><span>☕</span></div><p class="eyebrow">make the map yours</p><h3>Have a place in mind?</h3><p>Pin a café that makes studying easier for the next person.</p><button id="empty-add-button" class="button button-dark" type="button">Add a study spot</button></div>
+            <section id="spot-view" class="spot-view" hidden>
+              <div class="panel-heading"><p class="eyebrow">study spot</p><button id="close-view-button" class="close-button" type="button" aria-label="Close spot details">×</button></div>
+              <img id="view-photo" class="detail-photo" alt="" hidden />
+              <h3 id="view-title">Study café</h3><p id="view-address" class="muted-text"></p><div id="view-rating" class="rating-display" aria-label="Rating"></div><div id="view-tags" class="tag-list"></div><p id="view-note" class="note-block"></p>
+              <div class="panel-actions"><button id="edit-button" class="button button-soft" type="button">Edit</button><button id="delete-button" class="button button-danger" type="button">Delete</button></div>
+            </section>
+            <section id="spot-editor" class="spot-editor" hidden>
+              <div class="panel-heading"><div><p id="editor-eyebrow" class="eyebrow">new pin</p><h3 id="editor-title">Add a study spot</h3></div><button id="cancel-editor-button" class="close-button" type="button" aria-label="Cancel editing">×</button></div>
+              <form id="spot-form" novalidate>
+                <input id="pin-id" name="pinId" type="hidden" /><input id="latitude" name="lat" type="hidden" /><input id="longitude" name="lng" type="hidden" /><input id="photo-key" name="photoKey" type="hidden" />
+                <label class="field-label" for="cafe-name">Café name</label><input id="cafe-name" class="text-input" name="cafeName" maxlength="60" required placeholder="e.g. The Reading Room" />
+                <label class="field-label" for="address-display">Address</label><input id="address-display" class="text-input" name="address" maxlength="200" required placeholder="Search above to choose a place" /><p id="location-summary" class="field-help">Choose a location from search, or click the map.</p>
+                <div class="form-grid"><div><label class="field-label" for="rating">Rating</label><input id="rating" class="text-input" name="rating" type="number" min="1" max="5" step="0.1" inputmode="decimal" required placeholder="e.g. 4.5" /></div><div><label class="field-label" for="note">Short note</label><input id="note" class="text-input" name="note" maxlength="140" placeholder="Best for…" /></div></div>
+                <fieldset class="tag-fieldset"><legend class="field-label">What makes it good?</legend><div class="tag-options"><label class="tag-option"><input type="checkbox" name="tags" value="quiet" /><span>Quiet</span></label><label class="tag-option"><input type="checkbox" name="tags" value="wifi" /><span>WiFi</span></label><label class="tag-option"><input type="checkbox" name="tags" value="power_outlets" /><span>Power</span></label><label class="tag-option"><input type="checkbox" name="tags" value="food" /><span>Food</span></label><label class="tag-option"><input type="checkbox" name="tags" value="coffee" /><span>Coffee</span></label><label class="tag-option"><input type="checkbox" name="tags" value="group_study" /><span>Group study</span></label></div></fieldset>
+                <label class="field-label" for="photo">Optional photo</label><div class="photo-picker"><input id="photo" class="file-input" name="photo" type="file" accept="image/*" /><button id="clear-photo-button" class="button button-ghost photo-clear-button" type="button" disabled>Remove selected photo</button></div><img id="selected-photo-preview" class="selected-photo-preview" alt="" hidden /><p class="field-help">Keep images under 2 MB for a free-tier-friendly demo.</p>
+                <div class="panel-actions editor-actions"><button id="save-button" class="button button-dark button-grow" type="submit">Save pin</button><button id="cancel-form-button" class="button button-ghost" type="button">Cancel</button></div><p id="form-error" class="form-error" role="alert" hidden></p>
+              </form>
+            </section>
+            <section class="nearby-section"><div class="section-heading"><h3>Recently pinned</h3><span id="list-count" class="muted-text">0</span></div><div id="spot-list" class="spot-list"><p class="muted-text">Your community spots will appear here.</p></div></section>
+          </aside>
+          <section class="map-panel" aria-label="StudySpot map area"><div class="map-toolbar"><div id="search-mount" class="search-mount" aria-label="Search for a café or address"></div><button id="locate-button" class="icon-button" type="button" data-tooltip="Reset map view" title="Reset map view" aria-label="Reset map view">◎</button></div><div id="map" class="map-canvas" role="application" aria-label="Google Map showing study spots"><div class="map-message"><span class="map-message-icon" aria-hidden="true">✦</span><strong>Map loading</strong><span>Connecting you to good places to focus.</span></div></div><div class="map-footer"><span><span class="legend-dot"></span> community-rated study spots</span><span>Tap a pin to see details</span></div></section>
+        </div>
+      </section>
+    </main>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <script src="config.js"></script><script src="app.js"></script>
+  </body>
+</html>
